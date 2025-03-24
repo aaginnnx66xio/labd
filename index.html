@@ -3,28 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>User Register Form</title>
+    <script>
+        function changeBgColor(color) {
+            document.getElementById("box1").style.backgroundColor = color;
+        }
+    </script>
 </head>
 <body>
-    <div style="
-    display: flex;
-        justify-content: center;">
+    <div style="display: flex; justify-content: center;">
         <img src="logo.jpg" alt="logo" height="100px" width="100px" style="border-radius: 50%;">
     </div>
     <div style="display: flex; justify-content: center;">
-        <h1>Title</h1>
+        <h1>User Register Form</h1>
     </div>
-    <div style="
-        display: flex;
-       height: 500px;
-       justify-content: center;
-        ">
-    <div style="background-color: rgb(11, 67, 31); width: 200px;">
-        <div style="background-color: rgb(48, 35, 133);
-        height: 70%;">1</div>
-        <div>2</div>
-    </div>  
-    <div style="background-color: rgb(112, 60, 93); width: 200px;">3
+    <div style="display: flex; height: 700px; justify-content: center;">
+        <div style="background-color: rgb(161, 199, 237); width: 300px;">
+            <div id="box1" style="background-color: rgb(156, 178, 207); height: 60%;">
+                <form>
+                    <label>Username:</label>
+                    <input type="text" placeholder="Enter Username" required><br><br>
+
+                    <label>Email:</label>
+                    <input type="email" placeholder="Enter Email" required><br><br>
+
+                    <label>Password:</label>
+                    <input type="password" placeholder="Enter Password" required><br><br>
+
+                    <label>Confirm Password:</label>
+                    <input type="password" placeholder="Confirm Password" required><br><br>
+
+                    <label>Date of Birth:</label>
+                    <input type="date" required><br><br>
+
+                    <label>Country:</label>
+                    <select required>
+                        <option value="">Select Country</option>
+                        <option value="USA">USA</option>
+                        <option value="India">India</option>
+                        <option value="UK">UK</option>
+                        <option value="Australia">Australia</option>
+                    </select><br><br>
+
+                    <label>Background Color:</label>
+                    <input type="color" onchange="changeBgColor(this.value)"><br><br>
+
+                    <label>Gender:</label>
+                    <input type="radio" name="gender" value="Male" required> Male
+                    <input type="radio" name="gender" value="Female"> Female <br><br>
+
+                    <input type="checkbox" id="terms" required>
+                    <label for="terms">
+                        <a href="#" onclick="alert('Terms & Conditions: You must agree before proceeding.')">Accept Terms & Conditions</a>
+                    </label><br><br>
+
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+            <div style="background-color: rgb(31, 193, 171); height: 40%;">2</div>
+        </div>  
+        <div style="background-color: rgb(112, 60, 93); width: 300px;">3</div>
     </div>
 </body>
 </html>
