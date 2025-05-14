@@ -1,0 +1,274 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>User Register Form</title>
+  <style>
+    #box1 {
+      font-size: 13px;
+    }
+    #box1 h2 {
+      font-size: 13px;
+    }
+    .error {
+      color: red;
+      font-size: 11px;
+      margin-top: -5px;
+      margin-bottom: 5px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 90%;
+      color: white;
+    }
+    table, th, td {
+      border: 1px solid white;
+      padding: 8px;
+      text-align: center;
+    }
+  </style>
+  <script>
+    function changeBgColor(color) {
+      document.getElementById("box1").style.backgroundColor = color;
+      document.getElementById("bgColor").value = color; // store to hidden input
+    }
+
+    function validateForm(event) {
+      // same validation logic
+      event.preventDefault();
+
+      document.querySelectorAll('.error').forEach(el => el.textContent = '');
+
+      const username = document.getElementById('username').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const confirmPassword = document.getElementById('confirmPassword').value.trim();
+      const dob = document.getElementById('dob').value;
+      const country = document.getElementById('country').value;
+
+      let isValid = true;
+
+      const usernameRegex = /^[a-zA-Z0-9]+$/;
+      const passwordRegex = /^[a-zA-Z0-9]{8,}$/;
+
+      if (!usernameRegex.test(username)) {
+        document.getElementById('usernameError').textContent = 'Username must be alphanumeric only.';
+        isValid = false;
+      }
+
+      if (email === '') {
+        document.getElementById('emailError').textContent = 'Email is required.';
+        isValid = false;
+      }
+
+      if (!passwordRegex.test(password)) {
+        document.getElementById('passwordError').textContent = 'Password must be at least 8 alphanumeric characters.';
+        isValid = false;
+      }
+
+      if (password !== confirmPassword) {
+        document.getElementById('confirmPasswordError').textContent = 'Passwords do not match.';
+        isValid = false;
+      }
+
+      if (!dob || !isAbove18(dob)) {
+        document.getElementById('dobError').textContent = 'You must be above 18 years old.';
+        isValid = false;
+      }
+
+      if (!country) {
+        document.getElementById('countryError').textContent = 'Please select a country.';
+        isValid = false;
+      }
+
+      if (isValid) {
+        document.getElementById("mainForm").submit();
+      }
+    }
+
+    function isAbove18(dob) {
+      const birthDate = new Date(dob);
+      const today = new Date();
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const m = today.getMonth() - birthDate.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+      return age >= 18;
+    }
+  </script>
+</head>
+<body>
+  <div style="display: flex; justify-content: center;">
+    <img src="logo1.jpg" alt="logo1" height="100px" width="170px" style="border-radius: 100%;">
+  </div>
+  <div style="display: flex; justify-content: center;">
+    <h1>AQI</h1>
+  </div>
+  <div style="display: flex; height: 710px; justify-content: center;">
+    <div style="background-color: rgb(161, 199, 237); width: 290px; display: flex; flex-direction: column;">
+      <!-- Box1 -->
+      <div id="box1" style="background-color: rgb(240, 248, 255); height: 70%; padding: 20px; box-sizing: border-box; font-family: Arial;">
+        <h2 style="text-align: center;">User Register Form</h2>
+        <form id="mainForm" method="POST" action="process.php" onsubmit="validateForm(event)" style="display: flex; flex-direction: column; gap: 5px;">
+          <input type="hidden" id="bgColor" name="bgColor" value="#f0f8ff">
+
+          <label>Username:</label>
+          <input type="text" name="username" id="username" required>
+          <div id="usernameError" class="error"></div>
+
+          <label>Email:</label>
+          <input type="email" name="email" id="email" required>
+          <div id="emailError" class="error"></div>
+
+          <label>Password:</label>
+          <input type="password" name="password" id="password" required>
+          <div id="passwordError" class="error"></div>
+
+          <label>Confirm Password:</label>
+          <input type="password" id="confirmPassword" required>
+          <div id="confirmPasswordError" class="error"></div>
+
+          <label>Date of Birth:</label>
+          <input type="date" name="dob" id="dob" required>
+          <div id="dobError" class="error"></div>
+
+          <label>Country:</label>
+          <select name="country" id="country" required>
+            <option value="">Select Country</option>
+            <option>Bangladesh</option>
+            <option>USA</option>
+            <option>India</option>
+            <option>UK</option>
+            <option>Australia</option>
+            <option>Brazil</option>
+          </select>
+          <div id="countryError" class="error"></div>
+
+          <label>Background Color:</label>
+          <input type="color" onchange="changeBgColor(this.value)" style="height: 13px; width: 260px;">
+
+          <label>Gender:</label>
+          <div>
+            <label><input type="radio" name="gender" value="Male" required> Male</label>
+            <label><input type="radio" name="gender" value="Female"> Female</label>
+          </div>
+
+          <div>
+            <input type="checkbox" id="terms" required>
+            <label for="terms">
+              <a href="#" onclick="alert('Terms & Conditions: You must agree before proceeding.')">Accept Terms & Conditions</a>
+            </label>
+          </div>
+
+          <button type="submit" style="background-color: #4CAF50; color: white;">Submit</button>
+        </form>
+      </div>
+
+       <!-- Box2 -->
+      <div style="background-color: rgb(31, 193, 171); height: 30%; padding: 15px; box-sizing: border-box; font-family: Arial, sans-serif; display: flex; flex-direction:  column; gap: 4px; justify-content: center;">
+        <h2 style="text-align: center; color: white;">Sign Up</h2>
+        <form>
+            <form style="display: flex; flex-direction: column; gap: 5px;"></form>
+          <label style="color: white;">Email:</label>
+          <input type="email" placeholder="Enter Email" required>
+          <label style="color: white;">Password:</label>
+          <input type="password" placeholder="Enter Password" required>
+          <button type="button" style="background-color: #333; color: white;">Login</button>
+        </form>
+      </div>
+    </div>
+  
+
+  <!-- Box3 -->
+<div style="background-color: rgb(143, 210, 227); width: 290px; padding: 25px; box-sizing: border-box; font-family: Arial, sans-serif; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%;">
+  <h2 style="text-align: center; margin-bottom: 10px; font-size: 13px;">Country and AQI</h2>
+  <table style="width: 50%; border-collapse: collapse; color: black; font-size: 12px;">
+    <tbody>
+      <tr style="border: 1px solid black;">
+        <td style="border: 1px solid black;">USA</td>
+        <td style="border: 1px solid black;">75</td>
+      </tr>
+      <tr style="border: 1px solid black;">
+        <td style="border: 1px solid black;">China</td>
+        <td style="border: 1px solid black;">180</td>
+      </tr>
+      <tr style="border: 1px solid black;">
+        <td style="border: 1px solid black;">India</td>
+        <td style="border: 1px solid black;">120</td>
+      </tr>
+      <tr style="border: 1px solid black;">
+        <td style="border: 1px solid black;">UK</td>
+        <td style="border: 1px solid black;">65</td>
+      </tr>
+      <tr style="border: 1px solid black;">
+        <td style="border: 1px solid black;">Australia</td>
+        <td style="border: 1px solid black;">95</td>
+      </tr>
+      <tr style="border: 1px solid black;">
+        <td style="border: 1px solid black;">Brazil</td>
+        <td style="border: 1px solid black;">110</td>
+      </tr>
+      <tr style="border: 1px solid black;">
+        <td style="border: 1px solid black;">Canada</td>
+        <td style="border: 1px solid black;">40</td>
+      </tr>
+      <tr style="border: 1px solid black;">
+        <td style="border: 1px solid black;">Germany</td>
+        <td style="border: 1px solid black;">80</td>
+      </tr>
+      <tr style="border: 1px solid black;">
+        <td style="border: 1px solid black;">Japan</td>
+        <td style="border: 1px solid black;">50</td>
+      </tr>
+      <tr style="border: 1px solid black;">
+        <td style="border: 1px solid black;">France</td>
+        <td style="border: 1px solid black;">60</td>
+      </tr>
+      <tr style="border: 1px solid black;">
+        <td style="border: 1px solid black;">USA</td>
+        <td style="border: 1px solid black;">78</td>
+      </tr>
+      <tr style="border: 1px solid black;">
+        <td style="border: 1px solid black;">China</td>
+        <td style="border: 1px solid black;">155</td>
+      </tr>
+      <tr style="border: 1px solid black;">
+        <td style="border: 1px solid black;">India</td>
+        <td style="border: 1px solid black;">105</td>
+      </tr>
+      <tr style="border: 1px solid black;">
+        <td style="border: 1px solid black;">UK</td>
+        <td style="border: 1px solid black;">70</td>
+      </tr>
+      <tr style="border: 1px solid black;">
+        <td style="border: 1px solid black;">Australia</td>
+        <td style="border: 1px solid black;">85</td>
+      </tr>
+      <tr style="border: 1px solid black;">
+        <td style="border: 1px solid black;">Brazil</td>
+        <td style="border: 1px solid black;">90</td>
+      </tr>
+      <tr style="border: 1px solid black;">
+        <td style="border: 1px solid black;">Canada</td>
+        <td style="border: 1px solid black;">50</td>
+      </tr>
+      <tr style="border: 1px solid black;">
+        <td style="border: 1px solid black;">Germany</td>
+        <td style="border: 1px solid black;">60</td>
+      </tr>
+      <tr style="border: 1px solid black;">
+        <td style="border: 1px solid black;">Japan</td>
+        <td style="border: 1px solid black;">52</td>
+      </tr>
+      <tr style="border: 1px solid black;">
+        <td style="border: 1px solid black;">France</td>
+        <td style="border: 1px solid black;">48</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
